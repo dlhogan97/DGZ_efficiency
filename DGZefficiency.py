@@ -7,7 +7,7 @@ Created on Fri Jan  5 12:35:34 2024
 """
 
 # Libaries ####################################################################
-
+#%%
 import numpy as np
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
@@ -21,19 +21,19 @@ from matplotlib.colors import LinearSegmentedColormap
 # Inputs ######################################################################
 
 # Select time (must be contained in the latest GFS run)
-year=2024
-month=1
-day=7
-hour=0
+year=int(input("Year: "))
+month=int(input("Month: "))
+day=int(input("Day: "))
+hour=int(input("Hour: "))
 
 # Domain bounds (in degrees)
-north=50
-south=35
-east=-65
-west=-85
+north=52
+south=40
+east=-115
+west=-125
 
 # Toggle option for 0C land surface isotherm
-Plot_0C_Isotherm=False
+Plot_0C_Isotherm=True
 
 # Data ########################################################################
 
@@ -124,3 +124,10 @@ cbar.ax.tick_params(labelsize=8)
 # Plot title
 ax.set_title('Dendrite Growth (Average -ω*RH in -20°C < T < -10°C Layer)\n'+title+'GFS Initialized '+ncss.metadata.time_span['begin'][0:10]+' '+ncss.metadata.time_span['begin'][11:13]+'z, Valid '+str(valid)[0:13]+'z',fontsize=8)
 ax.text(lon[-2,-2],lat[-2,-2],'Map By Sam Brandt\nGitHub: SamBrandtMeteo',fontsize=4,ha='right',va='bottom')
+if hour < 10:
+    hour = '0' + str(hour)
+if day < 10:
+    day = '0' + str(day)
+if month < 10:
+    month = '0' + str(month)
+fig.savefig(f'dendrite_growth_{year}{month}{day}{hour}.png')
